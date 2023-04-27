@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="api-alive_health-commons-Flow" doc:id="bb9f0764-e79f-4ac7-a3a6-464c91b88bda" >
+		<http:listener doc:name="Listener" doc:id="60fa2082-bded-4862-a85e-1e334a4f8ff4" path="/alive" config-ref="HTTP_Listener_Config_Global">
+			<http:error-response >
+				<http:body ><![CDATA[#[output application/json --- { "status": "DOWN" }]]]></http:body>
+			</http:error-response>
+		</http:listener>
+		<set-payload value='#[output application/json --- { "status": "UP" }]' doc:name="Set Payload" doc:id="33c512af-8865-4ee9-8f78-5dd337fc2511" />
+	</flow>
+	<flow name="api-ready_health-commons-Flow" doc:id="e383356e-3eb2-4540-baaa-f3f90ed195c0" >
+		<http:listener doc:name="Listener" doc:id="9e399a42-b470-4885-aac3-b5e14af44da8" config-ref="HTTP_Listener_Config_Global" path="/ready">
+			<http:error-response >
+				<http:body ><![CDATA[#[output application/json --- { "status": "DOWN" }]]]></http:body>
+			</http:error-response>
+		</http:listener>
+		<flow-ref doc:name="check" doc:id="e4bca44d-cbd7-491f-a91b-48a491667d54" name="check-all-dependencies-are-alive"/>
+	</flow>
+</mule>
