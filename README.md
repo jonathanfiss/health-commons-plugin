@@ -23,11 +23,21 @@ To deploy this project on the exchange
 
 ## Usage/Examples
 
-```javascript
-import Component from 'my-project'
+You must import the exchange module
 
-function App() {
-  return <Component />
-}
-```
+<img src="docs/images/image-1.png">
+
+after that, you must import the module file, so that you can use the module flow
+
+<img src="docs/images/image-2.png">
+
+you should also create a request config with the following name "HTTP_Listener_Config_Global"
+
+<img src="docs/images/image-3.png">
+
+and you should also have a flow in your API with the following name "check-all-dependencies-are-alive". Which must have the systems verification logic
+
+<img src="docs/images/image-4.png">
+
+that's it, your health module import has been completed!
 
